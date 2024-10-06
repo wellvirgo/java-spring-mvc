@@ -12,7 +12,7 @@ import vn.hoidanit.laptopshop.service.UserService;
 @Controller
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -33,7 +33,8 @@ public class UserController {
 
     @RequestMapping(value = "admin/user/createUser", method = RequestMethod.POST)
     public String createUserPage(Model model, @ModelAttribute User newUser) {
-        System.out.println(newUser);
+        User user = this.userService.handleSaveUser(newUser);
+        System.out.println(user);
         return "hello";
     }
 
