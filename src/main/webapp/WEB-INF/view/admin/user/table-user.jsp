@@ -42,8 +42,8 @@
                                     <td>${user.getFullname()}</td>
                                     <td>
                                         <a href="/admin/user/${user.getId()}" class="btn btn-success">View</a>
-                                        <a href="#" class="btn btn-warning">Update</a>
-                                        <a href="#" class="btn btn-danger">Delete</a>
+                                        <a href="/admin/user/update/${user.getId()}" class="btn btn-warning">Update</a>
+                                        <a href="/admin/user/delete/${user.getId()}" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             </c:forEach>
