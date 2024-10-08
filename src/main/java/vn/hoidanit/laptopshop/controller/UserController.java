@@ -1,8 +1,11 @@
 package vn.hoidanit.laptopshop.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,16 +29,32 @@ public class UserController {
     }
 
     @RequestMapping("/admin/user")
+    public String displayUsers(Model model) {
+        List<User> userList = this.userService.getAllUsers();
+        model.addAttribute("userList", userList);
+        return "admin/user/table-user";
+    }
+
+    @RequestMapping("/admin/user/{id}")
+    public String getUserDetailPage(Model model, @PathVariable long id) {
+        User userById = this.userService.getUserById(id);
+        model.addAttribute("id", id);
+        model.addAttribute("user", userById);
+        System.out.println(userById);
+        return "admin/user/user-detail";
+    }
+
+    @RequestMapping("/admin/user/create")
     public String createUser(Model model) {
         model.addAttribute("newUser", new User());
         return "admin/user/create";
     }
 
-    @RequestMapping(value = "admin/user/createUser", method = RequestMethod.POST)
+    @RequestMapping(value = "admin/user/create", method = RequestMethod.POST)
     public String createUserPage(Model model, @ModelAttribute User newUser) {
         User user = this.userService.handleSaveUser(newUser);
         System.out.println(user);
-        return "hello";
+        return "redirect:/admin/user";
     }
 
 }
